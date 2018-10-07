@@ -17,6 +17,8 @@ if __name__ == "__main__":
     parser.add_argument("--languagemodel", "-l", type=argparse.FileType('rb'), required=True)
     parser.add_argument("--editmodel", "-e", type=argparse.FileType('rb'), required=True)
     parser.add_argument("--corpus", "-c", type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument("--output", "-o", type=argparse.FileType('w+'))
+    
     args = parser.parse_args()
 
     s=SpellChecker(max_distance=2)
@@ -24,7 +26,11 @@ if __name__ == "__main__":
     s.load_channel_model(args.editmodel)
 
     for line in args.corpus:
+        if not line.strip():
+            continue
         print("LINE: ", line)
         corrected = s.autocorrect_line(line)
         print("CORRECTED: ", corrected)
+        if args.output:
+            args.output.write(' '.join(corrected) + "\n")
 

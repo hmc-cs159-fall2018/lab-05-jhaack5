@@ -5,7 +5,6 @@
  # Copyright (c) 2018 Swarthmore College Computer Science Department, Swarthmore, PA
 ##
 
-
 from SpellCheck import SpellChecker
 from LanguageModel import LanguageModel
 from EditDistance import EditDistanceFinder
@@ -26,6 +25,10 @@ if __name__ == "__main__":
     print(s.channel_model.prob("hello", "hello"))
     print(s.channel_model.prob("hellp", "hello"))
     print(s.channel_model.prob("hllp", "hello"))
+    print(s.channel_model.align("helol", "hello"))
+    print(s.channel_model.prob("helol", "hello"))
+
+    print(s.check_line("jesus chirst look at that!"))
 
     print(s.check_line("they did not yb any menas"))
     """
@@ -33,12 +36,12 @@ if __name__ == "__main__":
     >>>  ['means', 'mens', 'mena', 'zenas', 'menan', 'mends']]
     """
 
-    print(s.autocorrect_line("they did not yb any menas"))
+    print(s.autocorrect_line("they did not yb any menas."))
     """
     >>> ['they', 'did', 'not', 'by', 'any', 'means']
     """
 
-    print(s.suggest_line("they did not yb any menas", max_suggestions=2))
+    print(s.suggest_line("they did not yb any menas.", max_suggestions=2))
     """
     >>> ['they', 'did', 'not', ['by', 'b'], 'any', ['means', 'mens']]
     """
